@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Categorias</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-container">
+    <header class="page-header">
+        <span class="eyebrow">SISTEMA DE BIBLIOTECA</span>
+        <h1>Gerenciamento de Categorias</h1>
+    <p class="page-description">Cadastre, consulte e organize as informações da biblioteca.</p>
+    </header>
+    <nav class="main-nav">
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+    <main>
+        <section class="content-section form-section">
+            <div class="section-heading"><div><span class="eyebrow">NOVO CADASTRO</span><h2>Registrar Categoria</h2></div></div>
+            <form class="data-form" th:action="@{/categorias}" method="post" th:object="${novaCategoria}">
+                <div class="form-field">
+                    <label for="genero">Gênero Literário</label>
+                    <input type="text" id="genero" th:field="*{genero}" placeholder="Ex: Ficção Científica" required>
+                </div>
+                <div class="form-field">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" th:field="*{descricao}" placeholder="Ex: Livros baseados em ciência" required>
+                </div>
+                <div class="form-field">
+                    <label for="classificacaoIndicativa">Classificação Indicativa</label>
+                    <select id="classificacaoIndicativa" th:field="*{classificacaoIndicativa}">
+                        <option value="Livre">Livre</option>
+                        <option value="+10">Maiores de 10 anos</option>
+                        <option value="+12">Maiores de 12 anos</option>
+                        <option value="+14">Maiores de 14 anos</option>
+                        <option value="+16">Maiores de 16 anos</option>
+                        <option value="+18">Maiores de 18 anos</option>
+                    </select>
+                </div>
+                <div class="form-actions"><button class="button-primary" type="submit">Salvar Categoria</button></div>
+            </form>
+        </section>
+                <section class="content-section">
+            <div class="section-heading">
+                <div><span class="eyebrow">REGISTROS</span><h2>Categorias cadastrados</h2></div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr>
+                    <th>Gênero</th>
+                    <th>Descrição</th>
+                    <th>Classificação</th>
+                        <th>Ações</th>
+                    </tr></thead>
+                    <tbody>
+                <tr th:each="categoria, stat : ${categorias}">
+                    <td th:text="${categoria.genero}"></td>
+                    <td th:text="${categoria.descricao}"></td>
+                    <td th:text="${categoria.classificacaoIndicativa}"></td>
+                    <td class="table-actions">
+                        <a class="action-link" th:href="@{/categorias/editar/{id}(id=${stat.index})}">Editar</a>
+                        <form class="inline-form" th:action="@{/categorias/{id}(id=${stat.index})}" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="button-danger" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(categorias)}">
+                    <td class="empty-state" colspan="4">Nenhuma categoria registrada ainda.</td>
+                </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer class="page-footer">Sistema de Biblioteca</footer>
+</div>
+</body>
+</html>

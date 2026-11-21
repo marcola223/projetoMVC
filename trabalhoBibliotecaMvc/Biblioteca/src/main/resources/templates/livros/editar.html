@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Livro</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-container">
+    <header class="page-header">
+        <span class="eyebrow">SISTEMA DE BIBLIOTECA</span>
+        <h1>Editar Livro</h1>
+    <p class="page-description">Faça as alterações necessárias e salve o registro.</p>
+    </header>
+    <nav class="main-nav">
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+    <main>
+        <section class="content-section edit-section">
+            <div class="section-heading"><div><span class="eyebrow">ALTERAÇÃO DE REGISTRO</span><h2>Atualize as informações</h2></div></div>
+            <form class="data-form" th:action="@{/livros/editar/{id}(id=${id})}" method="post" th:object="${livroExistente}">
+                <div class="form-field"><label for="titulo">Título</label><input type="text" id="titulo" th:field="*{titulo}" required></div>
+                <div class="form-field"><label for="autor">Autor</label><input type="text" id="autor" th:field="*{autor}" required></div>
+                <div class="form-field"><label for="isnb">ISBN</label><input type="text" id="isnb" th:field="*{isnb}" required></div>
+                <div class="form-actions">
+                    <button class="button-primary" type="submit">Atualizar Livro</button>
+                    <a class="button-secondary" th:href="@{/livros}">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer class="page-footer">Sistema de Biblioteca</footer>
+</div>
+</body>
+</html>

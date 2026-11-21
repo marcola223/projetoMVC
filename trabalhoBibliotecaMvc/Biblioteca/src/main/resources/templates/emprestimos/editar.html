@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Empréstimo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-container">
+    <header class="page-header">
+        <span class="eyebrow">SISTEMA DE BIBLIOTECA</span>
+        <h1>Editar Empréstimo</h1>
+    <p class="page-description">Faça as alterações necessárias e salve o registro.</p>
+    </header>
+    <nav class="main-nav">
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+    <main>
+        <section class="content-section edit-section">
+            <div class="section-heading"><div><span class="eyebrow">ALTERAÇÃO DE REGISTRO</span><h2>Atualize as informações</h2></div></div>
+            <form class="data-form" th:action="@{/emprestimos/editar/{id}(id=${id})}" method="post" th:object="${emprestimoExistente}">
+                <div class="form-field"><label for="dataEmprestimo">Data de Empréstimo</label><input type="date" id="dataEmprestimo" th:field="*{dataEmprestimo}" required></div>
+                <div class="form-field"><label for="dataDevolucao">Data de Devolução</label><input type="date" id="dataDevolucao" th:field="*{dataDevolucao}" required></div>
+                <div class="form-field"><label for="livroEmprestado">Livro</label><input type="text" id="livroEmprestado" th:field="*{livroEmprestado}" required></div>
+                <div class="form-actions">
+                    <button class="button-primary" type="submit">Atualizar Empréstimo</button>
+                    <a class="button-secondary" th:href="@{/emprestimos}">Cancelar</a>
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer class="page-footer">Sistema de Biblioteca</footer>
+</div>
+</body>
+</html>

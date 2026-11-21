@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Empréstimos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page-container">
+    <header class="page-header">
+        <span class="eyebrow">SISTEMA DE BIBLIOTECA</span>
+        <h1>Gerenciamento de Empréstimos</h1>
+    <p class="page-description">Cadastre, consulte e organize as informações da biblioteca.</p>
+    </header>
+    <nav class="main-nav">
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+    <main>
+        <section class="content-section form-section">
+            <div class="section-heading"><div><span class="eyebrow">NOVO CADASTRO</span><h2>Registrar Empréstimo</h2></div></div>
+            <form class="data-form" th:action="@{/emprestimos}" method="post" th:object="${novoEmprestimo}">
+                <div class="form-field">
+                    <label for="dataEmprestimo">Data do Empréstimo</label>
+                    <input type="date" id="dataEmprestimo" th:field="*{dataEmprestimo}" required>
+                </div>
+                <div class="form-field">
+                    <label for="dataDevolucao">Data de Devolução</label>
+                    <input type="date" id="dataDevolucao" th:field="*{dataDevolucao}" required>
+                </div>
+                <div class="form-field">
+                    <label for="livroEmprestado">Livro Emprestado</label>
+                    <input type="text" id="livroEmprestado" th:field="*{livroEmprestado}" placeholder="Nome do Livro" required>
+                </div>
+                <div class="form-actions"><button class="button-primary" type="submit">Salvar Empréstimo</button></div>
+            </form>
+        </section>
+                <section class="content-section">
+            <div class="section-heading">
+                <div><span class="eyebrow">REGISTROS</span><h2>Empréstimos cadastrados</h2></div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead><tr>
+                    <th>Data do Empréstimo</th>
+                    <th>Data de Devolução</th>
+                    <th>Livro Emprestado</th>
+                        <th>Ações</th>
+                    </tr></thead>
+                    <tbody>
+                <tr th:each="emprestimo, stat : ${emprestimos}">
+                    <td th:text="${emprestimo.dataEmprestimo}"></td>
+                    <td th:text="${emprestimo.dataDevolucao}"></td>
+                    <td th:text="${emprestimo.livroEmprestado}"></td>
+                    <td class="table-actions">
+                        <a class="action-link" th:href="@{/emprestimos/editar/{id}(id=${stat.index})}">Editar</a>
+                        <form class="inline-form" th:action="@{/emprestimos/{id}(id=${stat.index})}" method="post">
+                            <input type="hidden" name="_method" value="delete">
+                            <button class="button-danger" type="submit">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(emprestimos)}">
+                    <td class="empty-state" colspan="4">Nenhum empréstimo registrado ainda.</td>
+                </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer class="page-footer">Sistema de Biblioteca</footer>
+</div>
+</body>
+</html>
